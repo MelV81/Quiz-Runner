@@ -142,7 +142,7 @@
           "Ehen konnten nicht geschieden werden"
         ],
         correct: 2
-      $1,
+      
       {
         question: "Wahr oder falsch: Konkubinatspartner haben automatisch ein Erbrecht füreinander.",
         answers: ["Wahr", "Falsch"],
@@ -282,7 +282,14 @@
         playerPosition += 10;
         player.style.left = playerPosition + "px";
 
-        if (playerPosition + 50 >= obstacle.offsetLeft) {
+        const playerRect = player.getBoundingClientRect();
+        const obstacleRect = obstacle.getBoundingClientRect();
+        if (
+          playerRect.right >= obstacleRect.left &&
+          playerRect.left <= obstacleRect.right &&
+          playerRect.bottom >= obstacleRect.top &&
+          playerRect.top <= obstacleRect.bottom
+        ) {
           showQuestion();
         }
       }

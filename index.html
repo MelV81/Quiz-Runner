@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Runner: Zusammenleben</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #f0f8ff;
+    }
+
+    #game-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: 20px;
+      position: relative;
+    }
+
+    #game-area {
+      width: 100%;
+      height: 300px;
+      background-color: #dff;
+      border: 3px solid #333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #player {
+      width: 50px;
+      height: 50px;
+      background-color: #ff6347;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      left: 50px;
+      transition: left 0.2s;
+    }
+
+    #obstacle {
+      width: 60px;
+      height: 60px;
+      background-color: #ffa500;
+      position: absolute;
+      bottom: 0;
+      left: 600px;
+    }
+
+    #question-box {
+      margin-top: 20px;
+      background-color: #fffbe0;
+      border: 2px dashed #333;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    #question-box.hidden {
+      display: none;
+    }
+
+    #answers button {
+      margin: 5px;
+      padding: 10px;
+      background-color: #87cefa;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #answers button:hover {
+      background-color: #00bfff;
+    }
+
+    #score {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="game-area">
+      <div id="player"></div>
+      <div id="obstacle"></div>
+    </div>
+    <div id="question-box" class="hidden">
+      <p id="question-text"></p>
+      <div id="answers"></div>
+    </div>
+    <div id="score">Punkte: 0</div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Was versteht man unter einem gefestigten Konkubinat?",
+        answers: [
+          "Eine Ehe ohne Trauung",
+          "Eine langfristige Wohngemeinschaft mit wirtschaftlicher und emotionaler Bindung",
+          "Ein Zusammenleben mit gemeinsamen Kindern",
+          "Ein Verhältnis ohne Verpflichtungen"
+        ],
+        correct: 1
+      },
+      {
+        question: "Welche Institution beeinflusste das Eherecht im Mittelalter stark?",
+        answers: [
+          "Der Staat",
+          "Die Kirche",
+          "Die Universität",
+          "Die Nachbarschaft"
+        ],
+        correct: 1
+      },
+      {
+        question: "Was gehört zur Errungenschaft in einer Ehe?",
+        answers: [
+          "Erbschaften",
+          "Geschenke",
+          "Löhne während der Ehe",
+          "Eigengut"
+        ],
+        correct: 2
+      },
+      {
+        question: "Was ist ein Vorteil des Konkubinats?",
+        answers: [
+          "Man bekommt automatisch Witwenrente",
+          "Es ist steuerlich immer besser",
+          "Es kann ohne Scheidungsverfahren aufgelöst werden",
+          "Es ist gesetzlich geschützt wie eine Ehe"
+        ],
+        correct: 2
+      },
+      {
+        question: "Welche Aussage über die Familie im alten Rom ist richtig?",
+        answers: [
+          "Die Mutter war das Familienoberhaupt",
+          "Kinder hatten viele Rechte",
+          "Der Vater hatte Gewalt über die Familie bis zu seinem Tod",
+          "Ehen konnten nicht geschieden werden"
+        ],
+        correct: 2
+      }
+            {
+        question: "Wahr oder falsch: Konkubinatspartner haben automatisch ein Erbrecht füreinander.",
+        answers: ["Wahr", "Falsch"],
+        correct: 1
+      },
+      {
+        question: "Welche Aussage über das Bürgerrecht bei der Heirat ist korrekt?",
+        answers: [
+          "Die Frau verliert ihr Bürgerrecht",
+          "Beide behalten ihr ursprüngliches Bürgerrecht",
+          "Der Mann übernimmt das Bürgerrecht der Frau",
+          "Das Bürgerrecht wird durch das Kind bestimmt"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wahr oder falsch: Im Konkubinat besteht kein gegenseitiger Anspruch auf AHV-Hinterlassenenleistungen.",
+        answers: ["Wahr", "Falsch"],
+        correct: 0
+      },
+      {
+        question: "Was beschreibt die Gütergemeinschaft?",
+        answers: [
+          "Jeder verwaltet sein eigenes Vermögen",
+          "Nur das Eigengut gehört beiden",
+          "Beide Ehepartner besitzen gemeinsam ein Gesamtgut",
+          "Alles wird getrennt verwaltet"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wahr oder falsch: In der Gütertrennung haften beide Ehepartner gemeinsam für Schulden.",
+        answers: ["Wahr", "Falsch"],
+        correct: 1
+      },
+      {
+        question: "Welche Aussage beschreibt eine Liebesheirat im 19. Jahrhundert?",
+        answers: [
+          "War gesetzlich verboten",
+          "War hauptsächlich in der Oberschicht üblich",
+          "Setzte sich zunehmend durch",
+          "Wurde nur von der Kirche erlaubt"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wahr oder falsch: Die Ehe ist erst mit der kirchlichen Trauung gültig.",
+        answers: ["Wahr", "Falsch"],
+        correct: 1
+      },
+      {
+        question: "Welche Aussage zu Patchworkfamilien im Mittelalter ist korrekt?",
+        answers: [
+          "Gab es kaum",
+          "Waren typisch durch hohe Sterblichkeit",
+          "Wurden gesetzlich geregelt",
+          "Waren gesellschaftlich verboten"
+        ],
+        correct: 1
+      },
+      {
+        question: "Welche Pflicht haben Ehepartner laut ZGB bei Schulden für den Alltag?",
+        answers: [
+          "Keine",
+          "Nur der Mann haftet",
+          "Beide haften solidarisch",
+          "Nur mit Ehevertrag"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wahr oder falsch: Bei der Errungenschaft erhält jeder Ehepartner automatisch die Hälfte des Vorschlags.",
+        answers: ["Wahr", "Falsch"],
+        correct: 0
+      },
+      {
+        question: "Was ist ein Nachteil des Konkubinats?",
+        answers: [
+          "Günstigere Steuern",
+          "Unkomplizierte Trennung",
+          "Kein gesetzlicher Anspruch auf Witwenrente",
+          "Gemeinsames Sorgerecht ist automatisch"
+        ],
+        correct: 2
+      },
+      {
+        question: "Wahr oder falsch: Ein Verlöbnis ist ein rechtsverbindlicher Ehevertrag.",
+        answers: ["Wahr", "Falsch"],
+        correct: 1
+      },
+      {
+        question: "Welche Aussage zum Unterhalt nach einer Trennung im Konkubinat ist richtig?",
+        answers: [
+          "Es besteht automatisch ein Anspruch",
+          "Nur mit schriftlichem Vertrag",
+          "Immer für 2 Jahre",
+          "Nur wenn Kinder im Spiel sind"
+        ],
+        correct: 1
+      },
+      {
+        question: "Wahr oder falsch: Im Konkubinat haftet man automatisch für die Schulden des Partners.",
+        answers: ["Wahr", "Falsch"],
+        correct: 1
+      },
+      {
+        question: "Was passiert mit gemeinsam erspartem Geld bei der Errungenschaftsbeteiligung?",
+        answers: [
+          "Es bleibt beim besser Verdienenden",
+          "Es wird je zur Hälfte geteilt",
+          "Es gehört der Person, die das Konto führt",
+          "Es wird versteuert"
+        ],
+        correct: 1
+      }
+    ];
+
+    const player = document.getElementById("player");
+    const obstacle = document.getElementById("obstacle");
+    const questionBox = document.getElementById("question-box");
+    const questionText = document.getElementById("question-text");
+    const answersDiv = document.getElementById("answers");
+    const scoreDisplay = document.getElementById("score");
+
+    let playerPosition = 50;
+    let score = 0;
+    let currentQuestion = 0;
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        movePlayer();
+      }
+    });
+
+    function movePlayer() {
+      if (questionBox.classList.contains("hidden")) {
+        playerPosition += 10;
+        player.style.left = playerPosition + "px";
+
+        if (playerPosition + 50 >= obstacle.offsetLeft) {
+          showQuestion();
+        }
+      }
+    }
+
+    function showQuestion() {
+      questionBox.classList.remove("hidden");
+      const q = questions[currentQuestion];
+      questionText.textContent = q.question;
+      answersDiv.innerHTML = "";
+
+      q.answers.forEach((ans, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.onclick = () => checkAnswer(index);
+        answersDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[currentQuestion].correct;
+      if (selected === correct) {
+        score += 10;
+        scoreDisplay.textContent = "Punkte: " + score;
+        nextRound();
+      } else {
+        alert("Falsch! Versuch es nochmal.");
+      }
+    }
+
+    function nextRound() {
+      questionBox.classList.add("hidden");
+      currentQuestion++;
+
+      if (currentQuestion >= questions.length) {
+        alert("Gratulation! Du hast alle Fragen beantwortet.\nEndpunktzahl: " + score);
+        location.reload();
+      } else {
+        playerPosition = 50;
+        player.style.left = playerPosition + "px";
+      }
+    }
+  </script>
+</body>
+</html>

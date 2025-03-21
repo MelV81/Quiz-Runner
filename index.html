@@ -31,12 +31,12 @@
       width: 50px;
       height: 70px;
       background-color: transparent;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/4140/4140047.png');
+      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616430.png');
       background-size: cover;
       border-radius: 0;
-      border-radius: 50%;
+      border-radius: 0;
       position: absolute;
-      bottom: 0;
+      bottom: 10px;
       left: 50px;
       transition: left 0.2s;
     }
@@ -294,6 +294,7 @@
     }
 
     function jump() {
+      if (questionBox.classList.contains("hidden")) {
       let jumpHeight = 100;
       let startPosition = player.offsetTop;
       let upInterval = setInterval(() => {
@@ -343,6 +344,7 @@
     }
 
     function checkAnswer(selected) {
+      questionBox.classList.add("hidden");
       const correct = questions[currentQuestion].correct;
       if (selected === correct) {
         score += 10;

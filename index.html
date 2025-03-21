@@ -31,7 +31,9 @@
       width: 50px;
       height: 70px;
       background-color: transparent;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/616/616430.png');
+      background-image: none;
+      background-color: #ff6347;
+      border-radius: 50%;
       background-size: cover;
       border-radius: 0;
       border-radius: 0;
@@ -277,9 +279,8 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") {
         movePlayer();
-      } else if (e.key === "ArrowUp") {
-        jump();
       }
+    }); else 
       if (e.key === "ArrowRight") {
         movePlayer();
       }
@@ -293,14 +294,24 @@
       }
     }
 
-    function jump() {
+    function checkCollision() {
+      const playerRect = player.getBoundingClientRect();
+      const obstacleRect = obstacle.getBoundingClientRect();
+      if (
+        playerRect.right >= obstacleRect.left &&
+        playerRect.left <= obstacleRect.right
+      ) {
+        showQuestion();
+      }
+    }
       if (questionBox.classList.contains("hidden")) {
-      let jumpHeight = 100;
-      let startPosition = player.offsetTop;
-      let upInterval = setInterval(() => {
-        if (player.offsetTop > startPosition - jumpHeight) {
-          player.style.bottom = parseInt(player.style.bottom) + 5 + "px";
-        } else {
+        playerPosition += 10;
+        player.style.left = playerPosition + "px";
+        checkCollision();
+      }
+    }
+
+     else {
           clearInterval(upInterval);
           let downInterval = setInterval(() => {
             if (player.offsetTop < startPosition) {

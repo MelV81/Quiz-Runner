@@ -29,8 +29,11 @@
 
     #player {
       width: 50px;
-      height: 50px;
-      background-color: #ff6347;
+      height: 70px;
+      background-color: transparent;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/847/847969.png');
+      background-size: cover;
+      border-radius: 0;
       border-radius: 50%;
       position: absolute;
       bottom: 0;
@@ -274,10 +277,40 @@
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") {
         movePlayer();
+      } else if (e.key === "ArrowUp") {
+        jump();
+      }
+      if (e.key === "ArrowRight") {
+        movePlayer();
       }
     });
 
     function movePlayer() {
+      if (questionBox.classList.contains("hidden")) {
+        playerPosition += 10;
+        player.style.left = playerPosition + "px";
+        checkCollision();
+      }
+    }
+
+    function jump() {
+      let jumpHeight = 100;
+      let startPosition = player.offsetTop;
+      let upInterval = setInterval(() => {
+        if (player.offsetTop > startPosition - jumpHeight) {
+          player.style.bottom = parseInt(player.style.bottom) + 5 + "px";
+        } else {
+          clearInterval(upInterval);
+          let downInterval = setInterval(() => {
+            if (player.offsetTop < startPosition) {
+              player.style.bottom = parseInt(player.style.bottom) - 5 + "px";
+            } else {
+              clearInterval(downInterval);
+            }
+          }, 20);
+        }
+      }, 20);
+    }
       if (questionBox.classList.contains("hidden")) {
         playerPosition += 10;
         player.style.left = playerPosition + "px";

@@ -29,7 +29,7 @@
     const optionsDiv = document.getElementById("options");
     const scoreDisplay = document.getElementById("score");
 
-    let player = { x: 50, y: 360, w: 20, h: 20, color: "#0f0", dx: 2 };
+    let player = { x: 50, y: 360, w: 30, h: 30, dx: 2 };;
     let obstacles = [];
     let score = 0;
     let gamePaused = false;
@@ -62,8 +62,9 @@
     availableQuestions = [...questions];
 
     function drawPlayer() {
-      ctx.fillStyle = player.color;
-      ctx.fillRect(player.x, player.y, player.w, player.h);
+      let img = new Image();
+      img.src = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
+      ctx.drawImage(img, player.x, player.y, player.w, player.h);
     }
 
     function drawObstacles() {

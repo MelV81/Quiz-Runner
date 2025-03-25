@@ -61,11 +61,15 @@
 
     availableQuestions = [...questions];
 
-    function drawPlayer() {
-      const img = new Image();
-      img.onload = function() {
-        ctx.drawImage(img, player.x, player.y, player.w, player.h);
-      };
+    let runningImg = new Image();
+let standingImg = new Image();
+runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
+standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";
+
+function drawPlayer() {
+  const img = gamePaused ? standingImg : runningImg;
+  ctx.drawImage(img, player.x, player.y, player.w, player.h);
+};
       img.src = gamePaused
         ? "https://cdn-icons-png.flaticon.com/512/3048/3048395.png"
         : "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";

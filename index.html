@@ -63,13 +63,24 @@
 
     let runningImg = new Image();
 let standingImg = new Image();
+let imagesLoaded = 0;
+
+runningImg.onload = () => {
+  imagesLoaded++;
+  if (imagesLoaded === 2) startGame();
+};
+standingImg.onload = () => {
+  imagesLoaded++;
+  if (imagesLoaded === 2) startGame();
+};
+
 runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
 standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";
 
 function drawPlayer() {
   const img = gamePaused ? standingImg : runningImg;
   ctx.drawImage(img, player.x, player.y, player.w, player.h);
-};
+}
       img.src = gamePaused
         ? "https://cdn-icons-png.flaticon.com/512/3048/3048395.png"
         : "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
@@ -151,7 +162,11 @@ function drawPlayer() {
       requestAnimationFrame(gameLoop);
     }
 
-    gameLoop();
+    function startGame() {
+  gameLoop();
+}
+
+startGame();
   </script>
 </body>
 </html>

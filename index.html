@@ -62,9 +62,13 @@
     availableQuestions = [...questions];
 
     function drawPlayer() {
-      let img = new Image();
-      img.src = "https://cdn-icons-png.flaticon.com/512/616/616408.png";
-      ctx.drawImage(img, player.x, player.y, player.w, player.h);
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, player.x, player.y, player.w, player.h);
+      };
+      img.src = gamePaused
+        ? "https://cdn-icons-png.flaticon.com/512/3048/3048395.png"
+        : "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
     }
 
     function drawObstacles() {

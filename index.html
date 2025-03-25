@@ -36,22 +36,27 @@
     let currentQuestion = {};
     let availableQuestions = [];
 
-    const questions = [/* ... deine 20 Fragen wie gehabt ... */];
+    const questions = [
+      { question: "Was ist ein Konkubinat?", answers: ["Formelle Ehe", "Lose Beziehung", "Wohn-, Wirtschafts-, Geschlechtsgemeinschaft", "Nur mit Kindern möglich"], correct: 2 },
+      { question: "Worin besteht ein Vorteil des Konkubinats?", answers: ["Kein Risiko", "Volle Witwenrente", "Einfach auflösbar", "Pflicht zur Steuererklärung"], correct: 2 },
+      { question: "Was bedeutet Errungenschaft?", answers: ["Geld vor der Ehe", "Schenkungen", "Vermögen während der Ehe", "Erbschaft"], correct: 2 },
+      { question: "Was ist kein Eigengut?", answers: ["Erbschaft", "Persönlicher Schmuck", "Lohn", "Geschenk"], correct: 2 },
+      { question: "Wer haftet im Konkubinat für Schulden?", answers: ["Beide automatisch", "Nur die Frau", "Keiner", "Nur wer unterschreibt"], correct: 3 },
+      { question: "Was bedeutet gemeinsames Sorgerecht?", answers: ["Automatisch im Konkubinat", "Nur beim Vater", "Beide müssen zustimmen", "Nur durch Heirat möglich"], correct: 2 },
+      { question: "Was passiert bei Trennung im Konkubinat?", answers: ["Gericht entscheidet", "Notar klärt alles", "Gesetz regelt alles", "Paar muss selbst regeln"], correct: 3 },
+      { question: "Was ist ein Nachteil des Konkubinats?", answers: ["Höhere AHV", "Keine Witwenrente", "Mehr Rechte", "Stärkere Absicherung"], correct: 1 },
+      { question: "Was regelt ein Konkubinatsvertrag?", answers: ["Heirat", "Namensrecht", "Trennung, Vermögen, Sorgerecht", "Steuern"], correct: 2 },
+      { question: "Was ist die Voraussetzung für die Ehe?", answers: ["18 Jahre, urteilsfähig", "21 Jahre", "Volljährigkeit + Kinder", "Nur mit Zeugnis"], correct: 0 }
+    ];
 
     availableQuestions = [...questions];
 
-    let runningImg = new Image();
-    let standingImg = new Image();
+    const runningImg = new Image();
+    const standingImg = new Image();
     let imagesLoaded = 0;
 
-    runningImg.onload = () => {
-      imagesLoaded++;
-      if (imagesLoaded === 2) startGame();
-    };
-    standingImg.onload = () => {
-      imagesLoaded++;
-      if (imagesLoaded === 2) startGame();
-    };
+    runningImg.onload = () => { imagesLoaded++; if (imagesLoaded === 2) startGame(); };
+    standingImg.onload = () => { imagesLoaded++; if (imagesLoaded === 2) startGame(); };
 
     runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
     standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";

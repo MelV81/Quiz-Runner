@@ -29,61 +29,36 @@
     const optionsDiv = document.getElementById("options");
     const scoreDisplay = document.getElementById("score");
 
-    let player = { x: 50, y: 360, w: 30, h: 30, dx: 2 };;
+    let player = { x: 50, y: 360, w: 30, h: 30, dx: 2 };
     let obstacles = [];
     let score = 0;
     let gamePaused = false;
     let currentQuestion = {};
     let availableQuestions = [];
 
-    const questions = [
-      { question: "Was ist ein Konkubinat?", answers: ["Formelle Ehe", "Lose Beziehung", "Wohn-, Wirtschafts-, Geschlechtsgemeinschaft", "Nur mit Kindern möglich"], correct: 2 },
-      { question: "Worin besteht ein Vorteil des Konkubinats?", answers: ["Kein Risiko", "Volle Witwenrente", "Einfach auflösbar", "Pflicht zur Steuererklärung"], correct: 2 },
-      { question: "Was bedeutet Errungenschaft?", answers: ["Geld vor der Ehe", "Schenkungen", "Vermögen während der Ehe", "Erbschaft"], correct: 2 },
-      { question: "Was ist kein Eigengut?", answers: ["Erbschaft", "Persönlicher Schmuck", "Lohn", "Geschenk"], correct: 2 },
-      { question: "Wer haftet im Konkubinat für Schulden?", answers: ["Beide automatisch", "Nur die Frau", "Keiner", "Nur wer unterschreibt"], correct: 3 },
-      { question: "Was bedeutet gemeinsames Sorgerecht?", answers: ["Automatisch im Konkubinat", "Nur beim Vater", "Beide müssen zustimmen", "Nur durch Heirat möglich"], correct: 2 },
-      { question: "Was passiert bei Trennung im Konkubinat?", answers: ["Gericht entscheidet", "Notar klärt alles", "Gesetz regelt alles", "Paar muss selbst regeln"], correct: 3 },
-      { question: "Was ist ein Nachteil des Konkubinats?", answers: ["Höhere AHV", "Keine Witwenrente", "Mehr Rechte", "Stärkere Absicherung"], correct: 1 },
-      { question: "Was regelt ein Konkubinatsvertrag?", answers: ["Heirat", "Namensrecht", "Trennung, Vermögen, Sorgerecht", "Steuern"], correct: 2 },
-      { question: "Was ist die Voraussetzung für die Ehe?", answers: ["18 Jahre, urteilsfähig", "21 Jahre", "Volljährigkeit + Kinder", "Nur mit Zeugnis"], correct: 0 },
-      { question: "Welche Aussage ist korrekt?", answers: ["Kirchliche Trauung ist Pflicht", "Ziviltrauung ist Voraussetzung", "Nur kirchlich gültig", "Ohne Trauung = Ehe"], correct: 1 },
-      { question: "Wem gehören Möbel nach Trennung?", answers: ["Dem Mann", "Der Frau", "Dem Staat", "Wer sie gekauft hat"], correct: 3 },
-      { question: "Wie lange dauert ein gefestigtes Konkubinat mindestens?", answers: ["1 Jahr", "5 Jahre", "10 Jahre", "Unbegrenzt"], correct: 1 },
-      { question: "Wo stehen die meisten Ehe-Regeln?", answers: ["StGB", "ZGB", "OR", "BV"], correct: 1 },
-      { question: "Was heisst Gütergemeinschaft?", answers: ["Alles getrennt", "Nur Möbel gemeinsam", "Alles gehört beiden", "Nur Einkommen gemeinsam"], correct: 2 },
-      { question: "Was braucht es für gemeinsame Adoption?", answers: ["Gar nichts", "Ein ärztliches Attest", "Heirat oder 5 Jahre", "Ein Kind"], correct: 2 },
-      { question: "Was passiert mit der Haushaltskasse bei Trennung?", answers: ["Frau bekommt alles", "Aufteilen wie einbezahlt", "Nur der Mann bekommt was", "Alles verschenken"], correct: 1 },
-      { question: "Wem gehört das Auto bei Trennung?", answers: ["Immer der Frau", "Dem Käufer", "Dem Staat", "Beide gleich"], correct: 1 },
-      { question: "Wofür ist ein Verlöbnis gut?", answers: ["Gesetzliche Ehe", "Verpflichtende Hochzeit", "Fast-Vertrag ohne Pflicht", "Gerichtsbeschluss"], correct: 2 },
-      { question: "Was passiert beim Ehegattenunterhalt?", answers: ["Immer Pflicht", "Nur mit Vertrag oder Gericht", "Automatisch", "Nur bei Kindern"], correct: 1 }
-    ];
+    const questions = [/* ... deine 20 Fragen wie gehabt ... */];
 
     availableQuestions = [...questions];
 
     let runningImg = new Image();
-let standingImg = new Image();
-let imagesLoaded = 0;
+    let standingImg = new Image();
+    let imagesLoaded = 0;
 
-runningImg.onload = () => {
-  imagesLoaded++;
-  if (imagesLoaded === 2) startGame();
-};
-standingImg.onload = () => {
-  imagesLoaded++;
-  if (imagesLoaded === 2) startGame();
-};
+    runningImg.onload = () => {
+      imagesLoaded++;
+      if (imagesLoaded === 2) startGame();
+    };
+    standingImg.onload = () => {
+      imagesLoaded++;
+      if (imagesLoaded === 2) startGame();
+    };
 
-runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
-standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";
+    runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
+    standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";
 
-function drawPlayer() {
-  const img = gamePaused ? standingImg : runningImg;
-  ctx.drawImage(img, player.x, player.y, player.w, player.h);
-}
-      img.src = gamePaused
-        ? "https://cdn-icons-png.flaticon.com/512/3048/3048395.png"
-        : "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
+    function drawPlayer() {
+      const img = gamePaused ? standingImg : runningImg;
+      ctx.drawImage(img, player.x, player.y, player.w, player.h);
     }
 
     function drawObstacles() {
@@ -163,10 +138,8 @@ function drawPlayer() {
     }
 
     function startGame() {
-  gameLoop();
-}
-
-startGame();
+      gameLoop();
+    }
   </script>
 </body>
 </html>

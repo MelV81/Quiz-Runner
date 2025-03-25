@@ -58,13 +58,18 @@
     runningImg.onload = () => { imagesLoaded++; if (imagesLoaded === 2) startGame(); };
     standingImg.onload = () => { imagesLoaded++; if (imagesLoaded === 2) startGame(); };
 
-    runningImg.src = "https://cdn-icons-png.flaticon.com/512/1048/1048949.png";
-    standingImg.src = "https://cdn-icons-png.flaticon.com/512/3048/3048395.png";
+    runningImg.src = "https://cdn-icons-png.flaticon.com/512/11536/11536576.png";
+    standingImg.src = "https://cdn-icons-png.flaticon.com/512/11536/11536563.png";
 
     function drawPlayer() {
-      const img = gamePaused ? standingImg : runningImg;
-      ctx.drawImage(img, player.x, player.y, player.w, player.h);
-    }
+  const img = gamePaused ? standingImg : runningImg;
+  if (img.complete) {
+    ctx.drawImage(img, player.x, player.y, player.w, player.h);
+  } else {
+    ctx.fillStyle = "#0f0";
+    ctx.fillRect(player.x, player.y, player.w, player.h);
+  }
+}
 
     function drawObstacles() {
       obstacles.forEach(o => {
